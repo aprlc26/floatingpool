@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <title>April and Vera's Floating Pool Scene</title>
+    <style>
+      canvas {
+          display: block;
+          margin: 10px auto;
+          width: 100%;
+          height: 100%;
+      }
+    </style>
+    <script src="three.min.js"></script>
+    <script src="OrbitControls.js"></script>
+    <script src="tw.js"></script>
+    <script src="dat.gui.min.js"></script>
+    <script src="contrib.js"></script>
+  </head>
+
+<body>
+<script id="prog">
+
+// create a scene and a renderer
+var scene = new THREE.Scene();
+var renderer = new THREE.WebGLRenderer( {antialias:true} );
+renderer.shadowMap.enabled = true;
+TW.mainInit(renderer,scene);
+
+// add ambient light
+var ambientLight = new THREE.AmbientLight(0xbebebe);
+scene.add(ambientLight);
+
+// add directional light
+var dirLight = new THREE.DirectionalLight(0xbebebe, 0.4);
+dirLight.position.set(1,1,1);
+scene.add(dirLight);
+
+// add pointlight
+var pointlight = new THREE.SpotLight(0xbebebe, 0.1, 0, Math.atan(0.8));
+pointlight.position.set(200,150,220);
+pointlight.castShadow = true;
+scene.add(pointlight);
+
+// call the main function achu4yyePool() with the appropriate params
+achu4yyePool(renderer, scene, poolParams);
+
+// set up the camera and render the scene
+TW.cameraSetup(renderer,
+      			   scene,
+      			   {minx: -80, maxx: 80,
+      				  miny: -75, maxy: 75,
+      				  minz: -90, maxz: 90});
+TW.render();
+
+</script>
+</body>
+</html>

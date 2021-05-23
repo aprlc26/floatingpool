@@ -1,0 +1,248 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Floating Pool Scene</title>
+    <style>
+      body {
+        margin: 30px;
+      }
+      canvas {
+        display: block;
+        width: 80%;
+        height: auto;
+      }
+      p, li {
+        line-height: 1.3;
+      }
+      .flex-container {
+        display: flex;
+        flex-flow: wrap;
+        justify-content: center;
+      }
+      .flex-container > div {
+        margin: 10px;
+        padding: 20px;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+<body>
+<h1>Floating Pool Scene</h1>
+<p>By April Chu and Vera Ye</p><br>
+<h2>Project Description</h2>
+<p>
+  Our project is a whimsical take on a traditional pool scene by allowing users to imagine a pool with no gravity.
+  With the ongoing snow, we wish to capture the lively sentiments of summertime and relive our
+  summer daydreams of childhood. You can view the demo <a href="demo.html"> here! </a>
+</p>
+<h3>Inspiration</h3>
+<p>
+  Our initial source of inspiration came from this image of a pool with floating water.
+  Building off the idea of objects that defy gravity, we decided to extrapolate and build a
+  complete scene to encompass the pool. The minimal aesthetics of the scene is drawn from architectural
+  renderings of pool scenes by artist <a href = https://massimocolonna.com/>Massimo Colonna</a>.
+</p> <br>
+
+<div class="flex-container">
+  <div>
+    <img src="description_images/pool.jpeg" alt="floating pool inspo" height="400">
+  </div>
+  <div>
+    <img src="description_images/pool_inspo.jpg" alt="massimo colonna" height="400">
+  </div>
+</div>
+
+
+<h2>Concepts</h2>
+  <ul>
+    <h3><li>Modeling</h3>
+        <p>Objects in the scene that consist of composite geometries are:</p>
+        <ul>
+          <li>Pool: The swimming pool, the water and the side ladder are all parts of a pool composite object.
+            The rectangular base of the swimming pool is made of two box geometries to create an inner and outer
+            pool and 4 planes to create the edges of the base. The water is a composite object made of a box geometry
+            with and a bezier upper surface. The ladder is made of torus and cylinder geometries.
+          <li>Stairs: Both sets of stairs are composite objects of 4 cylinder geometries with decreasing radii,
+            stacked on top of one another. In order to create the quarter stairs in the left back corner, the thetaLength
+            parameter of the three.js CylinderGeometry was altered.
+          <li>Flamingo: The flamingo has a hierarchical structure of the head, neck, body, and legs. Each of the
+            structural components are made of custom geometries or detailed composite objects. The body is made of a
+            lathe geometry and the neck is made of an “S” shaped tube geometry. The head consists of a head objects, two eyes,
+            and a beak composite object. The angled and straight legs are separate composite objects made of cylinder and sphere geometries.
+          <li>Beach chair: The beach chair is a composite object of 2 custom shapes that were extruded to create the base and seat.
+          <li>Floating balls: The floating balls are composite objects made of and outer transparent sphere geometry
+            and an inner, texture-mapped sphere geometry.
+        </ul>
+        <p>All objects are first added to a scene box, and then the scene box is added to the scene. </p>
+
+    <h3><li>Materials, Lighting and Shading</h3>
+        <p>For the materials, we decided to use phong materials for all of the objects in the scene to give them more dimensionality
+          and reflectivity. The outer sphere of the floating ball uses the emissive property of MeshPhongMaterial; its emissive
+          property can be seen when the ambient light is turned off.
+          The scene has three gray toned light sources: an ambient light to brighten the entire scene, a toned
+          down directional light positioned in the upper-left of the origin, and a point light positioned outside of the scene
+          in the upper-left corner for casting shadows. All objects except for the two sets of stairs cast shadows based on the
+          directional of the point light.</p>
+
+          <div class="flex-container">
+            <div>
+              <img src="description_images/amblight.png" alt="ambient light" width="400">
+              <figcaption>Ambient Light</figcaption>
+            </div>
+            <div>
+              <img src="description_images/dirlight.png" alt="directional light" width="400">
+              <figcaption>Directional Light</figcaption>
+            </div>
+            <div>
+              <img src="description_images/pointlight.png" alt="point light" width="400">
+              <figcaption>Point Light</figcaption>
+            </div>
+          </div>
+
+    <h3><li>Curved Lines and Surfaces</h3>
+        <p>Curved lines and surfaces were used in the creation of the water surface, arch, surfboard, and flamingo. </p>
+        <ul>
+          <li>Water surface: The water surface is a Bezier surface made of 16 control points.
+          <li>Arch: The arch is a custom shape that has lines to create the rectangular frame and a bezier curve in the middle to
+            create an arch. The shape was extruded using the extrude geometry.
+          <li>Surfboard: The surfboard is a shape made of two symmetrical bezier curves and extruded using the extrude geometry.
+          <li>Flamingo: The body of the flamingo is a lathe geometry made from a spline curve and the neck is a tube geometry
+            made from an “S” shaped spline curve.
+        </ul>
+
+    <h3><li>Textures and Texture-mapping</h3>
+      <p>We made use of various textures that we found online, and then loaded them using TW.loadTextures(): </p>
+      <ul>
+        <li>The walls and the top of the scene are textured with a pink and blue gradient image.
+        <li>The circular stairs and the ground of the scene are textured with a white marble image.
+        <li>For the flamingo, the beak is textured with a golden beak image as well as a beak bump map image, the feathers are
+          textured with a pink feather image as well as a feather bump map image, and the legs are textured with a pink leg
+          image as well as a leg bump map image.
+        <li>For the pool, its inner surface is textured with a white and gray tile image, its ladder is textured with a
+          silver image, and the floating water cube is textured with a water image as well as a water bump map image.
+        <li>The water buoy is textured with a pink and white stripe image.
+        <li>The inner spheres of the floating balls are textured with a pink marble image.
+      </ul>
+
+      <h4>Textures</h4>
+      <div class="flex-container">
+        <div>
+          <img src="gradient.jpg" alt="gradient texture" height="100">
+          <figcaption>Gradient texture</figcaption>
+        </div>
+        <div>
+          <img src="water.jpg" alt="water texture" height="100">
+          <figcaption>Water texture</figcaption>
+        </div>
+        <div>
+          <img src="pool_tile.jpg" alt="tile texture" height="100">
+          <figcaption>Pool tile texture</figcaption>
+        </div>
+        <div>
+          <img src="pwstripe.png" alt="striped texture" height="100">
+          <figcaption>Pink and white stripe texture</figcaption>
+        </div>
+        <div>
+          <img src="pinkmarble.jpg" alt="pink marble texture" height="100">
+          <figcaption>Pink marble texture</figcaption>
+        </div>
+        <div>
+          <img src="marble.jpg" alt="pink marble texture" height="100">
+          <figcaption>White marble texture</figcaption>
+        </div>
+        <div>
+          <img src="silver.jpg" alt="silver texture" height="100">
+          <figcaption>Silver marble texture</figcaption>
+        </div>
+        <div>
+          <img src="feathers.jpg" alt="feather texture" height="100">
+          <figcaption>Flamingo feather texture</figcaption>
+        </div>
+        <div>
+          <img src="leg.jpg" alt="leg texture" height="100">
+          <figcaption>Flamingo leg texture</figcaption>
+        </div>
+        <div>
+          <img src="beak.jpg" alt="beak texture" height="100">
+          <figcaption>Flamingo beak texture</figcaption>
+        </div>
+      </div>
+
+      <h4>Bump Maps</h4>
+        <div class="flex-container">
+          <div>
+            <img src="waterBump.jpg" alt="water bump map" height="100">
+            <figcaption>Water bump map</figcaption>
+          </div>
+          <div>
+            <img src="beakBumpMap.jpg" alt="beak bump map" height="100">
+            <figcaption>Flamingo beak bump map</figcaption>
+          </div>
+          <div>
+            <img src="feathersBumpMap.jpg" alt="feathers bump map" height="100">
+            <figcaption>Flamingo feather bump map</figcaption>
+          </div>
+          <div>
+            <img src="legBumpMap.jpg" alt="leg bump map" height="100">
+            <figcaption>Flamingo leg bump map</figcaption>
+          </div>
+        </div>
+
+    <h3><li>Transparency</h3>
+      <p>In order to make the swimming pool look authentic, we created a transparent material (with its transparent property
+        set to be true and its opacity set to be 0) and mapped the material to the top face of the swimming pool, so that the
+        inner tiles of the pool could be visible. The water texture for the water cube is set to be half transparent (with its
+        transparent property set to be true and its opacity set to be 0.5). The outer spheres of the floating balls are made with
+        a half transparent material (with its transparent property set to be true and its opacity set to be 0.3).</p>
+
+    <h3><li>User Interaction</h3>
+      <p>We created two sliders with dat.GUI(), named ‘float’ and ‘rotate’ to allow the user to control the amount of gravity
+        in the scene. The ‘float’ slider acts as a (anti-)gravity control:  as the value of the slider increases, all objects
+        in the scene (except for the swimming pool) floats up in the scene box, and vice versa. The float slider is set to be
+        within the range of 5 and 30. The ‘rotate’ slider rotates some objects in the scene by adding on some predefined
+        values to the current slider value. The rotate slider is set to be within the range of -Math.PI/2 and Math.PI/2.</p>
+
+        <div class="flex-container">
+          <div>
+            <img src="description_images/gui_1.png" alt="normal scene" height="400">
+            <figcaption>Normal scene</figcaption>
+          </div>
+          <div>
+            <img src="description_images/gui_2.png" alt="floating and rotated scene" height="400">
+            <figcaption>Floating and rotated scene</figcaption>
+          </div>
+        </div>
+
+    <h3><li>Animation</h3>
+      <p>One of our biggest goals (and challenges) was to make the water cube look authentic. But even after texture mapping it with
+        a water image and a water bump map, the result wasn’t as satisfactory. So we decided to animate the water cube, especially
+        its surface, because that area is where movement of the water is the most apparent. We made the surface of the water cube
+        with a bezier surface, and animated the surface by altering the Y-values of the four inner control points of the bezier
+        surface based on its current frame number and re-rendering the scene at each frame. We chose to make the rest of the control
+        points fixed, or else the water surface would be separated from the water body as the Y-values changed.
+        In addition, to make the whole scene appear more lively and dynamic and to better illustrate the lighting and shading effects
+        in our scene (as explained in the Lighting and Shading section), the floating balls are animated by setting their rotation in
+        the Y direction to be the multiplication of their current frame number with Math.PI/6 and re-rendering the scene at every frame.
+        <div class="flex-container">
+          <div>
+            <img src="description_images/ani1.png" alt="animation 1" height="400">
+          </div>
+          <div>
+            <img src="description_images/ani2.png" alt="animation 2" height="400">
+          </div>
+          <div>
+            <img src="description_images/ani3.png" alt="animation 3" height="400">
+            <figcaption>Floating balls appear in different positions (as seen from top)</figcaption>
+          </div>
+        </div>
+      </br></br>
+        For both the water surface animation and the floating ball animation, we decided to make use of the setInterval() function
+        instead of taking either the derivative or positional approach, since we believe that the animations that we want to create in
+        our scene are orderly and patterned. Thus, using setInterval() would be the more straightforward and efficient option.</p>
+  </ul>
+<h2>Credits</h2>
+<p>We borrowed and modified the flamingo from <a href=https://cs.wellesley.edu/~cs307/threejs/contrib/mbritt_flamingo/>‘mbritt_flamingo’</a>
+  in the CS307 student contribution library.</p>
+
+</body>
+</html>
